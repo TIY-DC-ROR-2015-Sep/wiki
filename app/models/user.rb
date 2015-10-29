@@ -6,4 +6,13 @@ class User < ActiveRecord::Base
 
   has_many :articles
   has_many :edits
+
+  def edit article, text
+    edits.create!(
+      article:     article,
+      old_version: article.body,
+      new_version: text
+    )
+    article.update! body: text
+  end
 end
