@@ -1,0 +1,5 @@
+h1 Editing '#{@article.title}'
+
+= form_for @article do |f|
+  = f.text_area :body, class: "form-control", rows: 10
+  button.btn.btn-primary Save
