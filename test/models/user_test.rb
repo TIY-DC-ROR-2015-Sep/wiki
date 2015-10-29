@@ -27,4 +27,21 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "This is the new text", e.new_version
     assert_equal user, e.user
   end
+
+  test "users can't soft-delete articles" do
+    user    = create_user("su")
+    article = Article.create!(
+      body:  "This is the old text",
+      title: "Title",
+      owner: create_user("tom")
+    )
+
+    assert_raises ActiveRecord::RecordInvalid do
+      user.edit article, ""
+    end
+
+    assert_equal "This is the old text", article.body
+    assert_equal 0, user.edits.count
+    assert_equal 0, article.edits.count
+  end
 end
