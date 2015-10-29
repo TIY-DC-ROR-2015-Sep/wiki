@@ -1,6 +1,7 @@
 h1= @article.title
 
-= link_to "Edit", edit_article_path(@article), class: "btn btn-default"
+- if current_user
+  = link_to "Edit", edit_article_path(@article), class: "btn btn-default"
 
 .well
   = @article.body
@@ -8,3 +9,17 @@ h1= @article.title
 hr
 
 h3 #{@article.edits.count} edits
+
+table.table.table-striped.table-hover
+  thead
+    tr
+      th By
+      th At
+      th Change
+  tbody
+    - @article.edits.order(created_at: :desc).each do |e|
+      tr
+        td= e.user.email
+        td #{time_ago_in_words e.created_at} ago
+        / WARNING!
+        td= e.diff.html_safe

@@ -15,6 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'twitter-bootstrap-rails'
+gem 'diffy'
 
 group :development do
   gem 'pry-rails'

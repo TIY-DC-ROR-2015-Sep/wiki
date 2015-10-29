@@ -8,4 +8,8 @@ class Edit < ActiveRecord::Base
   def revert?
     user.nil?
   end
+
+  def diff
+    Diffy::Diff.new(old_version, new_version).to_s
+  end
 end
