@@ -4,8 +4,13 @@ class Article < ActiveRecord::Base
   has_many :edits
 
   validates_presence_of :title, :owner
+  validates_uniqueness_of :title
 
   def undo edit
+    unless id == edit.article_id
+      raise "Trying to undo edit for wrong article (#{edit.article_id})"
+    end
+    
     edits.create!(
       old_version: body,
       new_version: edit.old_version
